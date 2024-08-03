@@ -11,7 +11,7 @@ from rest_framework.response import Response
 # Create your views here.
 @csrf_exempt
 @api_view(['GET', 'POST'])
-def snippet_list(request):
+def snippet_list(request, format=None):
     #lists all code snippets or create new snippet
 
     if request.method == 'GET':
@@ -29,7 +29,7 @@ def snippet_list(request):
 
 @csrf_exempt
 @api_view(['GET', 'PUT', 'DELETE'])
-def snippet_detail(request, pk):
+def snippet_detail(request, pk, format=None):
     """
     Retrieve, update or delete a code snippet.
     """
