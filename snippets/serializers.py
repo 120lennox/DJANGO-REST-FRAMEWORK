@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from rest_framework import permissions
 
 
-class UserSerializer(serializers.modelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     snippets = serializers.PrimaryKeyRelatedField(many=True, queryset=Snippet.objects.all())
 
     #permisions that allow only authenticated users to get read, write accesses while the lest get only r5ead access
