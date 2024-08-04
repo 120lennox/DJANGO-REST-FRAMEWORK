@@ -29,6 +29,10 @@ class SnippetList(generics.ListCreateAPIView):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
 
+    #this method maps each created snippet with its associated creator(the owner)
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
 #using class mixins
 # class SnippetList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPISView):
 #     queryset = Snippet.objects.all()
