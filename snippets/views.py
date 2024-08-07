@@ -31,7 +31,7 @@ def api_root(request, format=True):
     })
 
 #snippet highlighter endpoint
-class SnippetHighlight(generic.GenericAPIView):
+class SnippetHighlight(generics.GenericAPIView):
     queryset = Snippet.objects.all()
     renderer_classes = [renderers.StaticHTMLRenderer]
 
