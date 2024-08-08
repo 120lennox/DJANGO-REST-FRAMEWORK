@@ -37,7 +37,7 @@ def api_root(request, format=None):
     the set of code below, we change UserList and UserDetail into a single viewset function
 '''
 
-class UserViewSet(viewsets.ReadOnlyModelViewset):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     #this viewset provides both list and retrieve actions
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -58,7 +58,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewset):
     additionally we also create highlight actions. 
 '''
 
-class SnippetViewSet(viewsets.ModelViewset):
+class SnippetViewSet(viewsets.ModelViewSet):
     queryset = Snippet.objects.all()
     serializer_class = SnippetSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
@@ -72,23 +72,23 @@ class SnippetViewSet(viewsets.ModelViewset):
         serializer.save(owner=self.request.user)
 
 #snippet highlighter endpoint
-class SnippetHighlight(generics.GenericAPIView):
-    queryset = Snippet.objects.all()
-    renderer_classes = [renderers.StaticHTMLRenderer]
+# class SnippetHighlight(generics.GenericAPIView):
+#     queryset = Snippet.objects.all()
+#     renderer_classes = [renderers.StaticHTMLRenderer]
 
-    def get(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        return Response(snippet.highlighted)
+#     def get(self, request, *args, **kwargs):
+#         snippet = self.get_object()
+#         return Response(snippet.highlighted)
 
 
-#Most efficient way of writing rest views 
-class SnippetList(generics.ListCreateAPIView):
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
+# #Most efficient way of writing rest views 
+# class SnippetList(generics.ListCreateAPIView):
+#     queryset = Snippet.objects.all()
+#     serializer_class = SnippetSerializer
 
-    #this method maps each created snippet with its associated creator(the owner)
-    def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+#     #this method maps each created snippet with its associated creator(the owner)
+#     def perform_create(self, serializer):
+#         serializer.save(owner=self.request.user)
 
 #using class mixins
 # class SnippetList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPISView):
@@ -137,10 +137,10 @@ class SnippetList(generics.ListCreateAPIView):
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 #most efficient way of writing rest views that use less code
-class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Snippet.objects.all()
-    serializer_class = SnippetSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+# class SnippetDetail(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Snippet.objects.all()
+#     serializer_class = SnippetSerializer
+#     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
 # mixin class representation
 # class SnippetDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
