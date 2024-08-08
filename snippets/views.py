@@ -19,6 +19,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
 from rest_framework import renderers
+from rest_framework import viewsets
 
 # Create your views here.
 
@@ -38,14 +39,24 @@ class SnippetHighlight(generics.GenericAPIView):
     def get(self, request, *args, **kwargs):
         snippet = self.get_object()
         return Response(snippet.highlighted)
-    
-class UserList(generics.ListAPIView):
+
+'''
+    Viewsets: These are class based views that by default come with all the CRUDE methods. 
+    the set of code below, we change UserList and UserDetail into a single viewset function
+'''
+
+class UserViewSet(viewsets.ReadOnlyModelViewset):
+    #this viewset provides both list and retrieve actions
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-class UserDetail(generics.RetrieveAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# class UserList(generics.ListAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
+
+# class UserDetail(generics.RetrieveAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
 #Most efficient way of writing rest views 
 class SnippetList(generics.ListCreateAPIView):
