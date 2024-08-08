@@ -24,7 +24,7 @@ from rest_framework import renderers
 
 #central API endpoint (an entry point for our API)
 @api_view(['GET'])
-def api_root(request, format=True):
+def api_root(request, format=None):
     return Response({
         'users': reverse('user-list', request=request, format=format),
         'snippets': reverse('snippet-list', request=request, format=format)
